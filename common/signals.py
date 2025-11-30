@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.signals import user_logged_in, user_login_failed
 from django.dispatch import receiver
 
-from prototype_setup.models import FailedLogin
+from common.models import FailedLogin
 
 
 @receiver(user_logged_in)

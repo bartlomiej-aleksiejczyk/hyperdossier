@@ -18,10 +18,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from hyperadmin.admin import hyperadmin
 
 urlpatterns = [
     path('admin/doc/', include('django.contrib.admindocs.urls')),
-    path("admin/", admin.site.urls),                    # classic Django admin
+    path("admin/", hyperadmin.urls),
     path("finances/", include("finances.urls", namespace="finances")),
 ]
 

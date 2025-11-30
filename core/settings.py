@@ -31,7 +31,8 @@ ALLOWED_HOSTS = ["0.0.0.0", "localhost", "127.0.0.1"]
 # Application definition
 
 INSTALLED_APPS = [
-    'prototype_setup',
+    'common',
+    'hyperadmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -125,7 +126,7 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-AUTH_USER_MODEL = "prototype_setup.CustomizedUser"
+AUTH_USER_MODEL = "common.CustomizedUser"
 ADMIN_CUSTOM_USERLINKS = [
     {"label": "Transactions", "url_name": "finances:transaction_list"},
 ]
