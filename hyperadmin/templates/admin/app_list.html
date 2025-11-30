@@ -1,5 +1,34 @@
 {% load i18n %}
 
+{% if extra_modules %}
+  {% for module in extra_modules %}
+    <div class="app-extra-{{ module.id }} module">
+      <table>
+        <caption>
+          {{ module.title }}
+        </caption>
+        <thead class="visually-hidden">
+          <tr>
+            <th scope="col">{% translate 'Item name' %}</th>
+            <th scope="col">{% translate 'Add link' %}</th>
+            <th scope="col">{% translate 'Change or view list link' %}</th>
+          </tr>
+        </thead>
+        {% for item in module.items %}
+          <tr class="model-extra">
+            <th scope="row">
+              <a href="{{ item.url }}">{{ item.label }}</a>
+            </th>
+            <td></td>
+            {% if show_changelinks %}
+              <td></td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  {% endfor %}
+{% endif %}
 {% if app_list %}
   {% for app in app_list %}
     <div class="app-{{ app.app_label }} module{% if app.app_url in request.path|urlencode %} current-app{% endif %}">

@@ -34,6 +34,6 @@ def admin_userlinks():
             resolved.append((label, url))
         except NoReverseMatch:
             continue
-    print(resolved)
+
     return resolved
 

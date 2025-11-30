@@ -2,12 +2,6 @@
 {% load admin_userlinks %}
 {% load i18n %}
 
-{% comment %} {% block breadcrumbs %}
-  <ol class="breadcrumbs">
-    <li><a href="{% url 'admin:index' %}">{% translate 'Home' %}</a></li>
-    {% if title %}<li aria-current="page">{{ title }}</li>{% endif %}
-  </ol>
-{% endblock %} {% endcomment %}
 {% block userlinks %}
     {% admin_userlinks as links %}
     {% for label, url in links %}

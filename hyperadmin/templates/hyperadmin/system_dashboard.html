@@ -1,0 +1,16 @@
+{# templates/admin/system_dashboard.html #}
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+  <div id="content" class="dashboard">
+    <h2>{{ title }}</h2>
+
+    <div class="module">
+      <h2>Quick stats</h2>
+      <table>
+        <tr><th>Users</th><td>{{ stats.users }}</td></tr>
+        <tr><th>Orders</th><td>{{ stats.orders }}</td></tr>
+      </table>
+    </div>
+  </div>
+{% endblock %}
