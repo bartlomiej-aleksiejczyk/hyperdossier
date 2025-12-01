@@ -64,12 +64,12 @@ services:
       - "traefik.http.services.hyperadmin.loadbalancer.server.port=80"
     networks:
       - default
-      - proxy
+      # - proxy
 
 networks:
   default:
-  proxy:
-    external: true
+  # proxy:
+  #   external: true
 volumes:
   hyperadmin_db_data:
   hyperadmin_static_data:
