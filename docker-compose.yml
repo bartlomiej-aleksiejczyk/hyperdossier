@@ -9,10 +9,10 @@ services:
              --error-logfile /app/var/logs/gunicorn_error.log
              --bind 0.0.0.0:8000"
     volumes:
-      - ./var/db:/app/var/db
-      - ./var/static:/app/var/static
-      - ./var/media:/app/var/media
-      - ./var/logs:/app/var/logs
+      - ${DJANGO_DB_VOLUME:-hyperadmin_db_data}:/app/var/db
+      - ${DJANGO_STATIC_VOLUME:-hyperadmin_static_data}:/app/var/static
+      - ${DJANGO_MEDIA_VOLUME:-hyperadmin_media_data}:/app/var/media
+      - ${DJANGO_LOGS_VOLUME:-hyperadmin_logs_data}:/app/var/logs
     networks:
       - default
     healthcheck:
@@ -31,10 +31,10 @@ services:
     command: >
       sh -c "python manage.py qcluster"
     volumes:
-      - ./var/db:/app/var/db
-      - ./var/static:/app/var/static
-      - ./var/media:/app/var/media
-      - ./var/logs:/app/var/logs
+      - ${DJANGO_DB_VOLUME:-hyperadmin_db_data}:/app/var/db
+      - ${DJANGO_STATIC_VOLUME:-hyperadmin_static_data}:/app/var/static
+      - ${DJANGO_MEDIA_VOLUME:-hyperadmin_media_data}:/app/var/media
+      - ${DJANGO_LOGS_VOLUME:-hyperadmin_logs_data}:/app/var/logs
     depends_on:
           web:
             condition: service_healthy
@@ -51,9 +51,9 @@ services:
       - web
     volumes:
       - ./nginx/django.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./var/static:/app/var/static
-      - ./var/media:/app/var/media
-      - ./var/logs:/app/var/logs
+      - ${DJANGO_STATIC_VOLUME:-hyperadmin_static_data}:/app/var/static
+      - ${DJANGO_MEDIA_VOLUME:-hyperadmin_media_data}:/app/var/media
+      - ${DJANGO_LOGS_VOLUME:-hyperadmin_logs_data}:/app/var/logs
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
@@ -70,3 +70,8 @@ networks:
   default:
   proxy:
     external: true
+volumes:
+  hyperadmin_db_data:
+  hyperadmin_static_data:
+  hyperadmin_media_data:
+  hyperadmin_logs_data:
