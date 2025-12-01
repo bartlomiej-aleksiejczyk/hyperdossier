@@ -160,7 +160,7 @@ Q_CLUSTER = {
     'orm': 'default'
 }
 
-LOG_DIR = BASE_DIR / 'var' / 'logs'
+LOG_DIR = os.path.join(BASE_DIR, 'var', 'logs')
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,

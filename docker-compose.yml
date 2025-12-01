@@ -50,7 +50,7 @@ services:
     depends_on:
       - web
     volumes:
-      - ./nginx:/etc/nginx/conf.d:ro
+    - ./nginx:/etc/nginx/conf.d:ro
       - ${DJANGO_STATIC_VOLUME:-hyperadmin_static_data}:/app/var/static
       - ${DJANGO_MEDIA_VOLUME:-hyperadmin_media_data}:/app/var/media
       - ${DJANGO_LOGS_VOLUME:-hyperadmin_logs_data}:/app/var/logs
@@ -64,12 +64,12 @@ services:
       - "traefik.http.services.hyperadmin.loadbalancer.server.port=80"
     networks:
       - default
-      # - proxy
+      - proxy
 
 networks:
   default:
-  # proxy:
-  #   external: true
+  proxy:
+    external: true
 volumes:
   hyperadmin_db_data:
   hyperadmin_static_data:
