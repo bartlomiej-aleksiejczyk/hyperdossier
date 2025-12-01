@@ -1,4 +1,5 @@
 'use strict';
+/** Everything is the same the original version apart from the initSidebarQuickFilter function. */
 {
         const toggleNavSidebar = document.getElementById('toggle-nav-sidebar');
         if (toggleNavSidebar !== null) {
@@ -23,6 +24,7 @@
             });
         }
 
+        /** This method hides sidebar items and item groups. */
         function initSidebarQuickFilter() {
             const options = [];
             const navSidebar = document.getElementById('nav-sidebar');
