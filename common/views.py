@@ -34,7 +34,7 @@ def protected_media(request, relative_path: str):
     if content_type is None:
         content_type = "application/octet-stream"
 
-    internal_path = f"/protected-media/{rel_for_internal.as_posix()}"
+    internal_path = f"hyperadmin/protected-media/{rel_for_internal.as_posix()}"
 
     response = HttpResponse(content_type=content_type)
     response["X-Accel-Redirect"] = internal_path
