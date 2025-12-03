@@ -11,7 +11,6 @@ class CommonConfig(AppConfig):
     def ready(self):
         from . import signals
         register_admin_autoreg("auth")
-        register_admin_autoreg("django_q")
         register_admin_sidebar_modules({
             "id": "reports",
             "title": "Reports",

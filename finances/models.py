@@ -93,7 +93,7 @@ class ExchangeRate(models.Model):
         constraints = [
             models.CheckConstraint(
                 name="exchange_rate_from_ne_to",
-                check=~Q(from_unit=F("to_unit")),
+                condition=~Q(from_unit=F("to_unit")),
             ),
         ]
         indexes = [
@@ -160,10 +160,10 @@ class Transaction(models.Model):
             models.Index(fields=["project"]),
         ]
         constraints = [
-            models.CheckConstraint(name="transaction_amount_gt_zero", check=Q(amount__gt=0)),
+            models.CheckConstraint(name="transaction_amount_gt_zero", condition=Q(amount__gt=0)),
             models.CheckConstraint(
                 name="transaction_from_to_by_type",
-                check=(
+                condition=(
                     (Q(type="INCOME") & Q(to_asset_source__isnull=False) & Q(from_asset_source__isnull=True))
                     |
                     (Q(type="EXPENSE") & Q(from_asset_source__isnull=False) & Q(to_asset_source__isnull=True))
@@ -173,7 +173,7 @@ class Transaction(models.Model):
             ),
             models.CheckConstraint(
                 name="transaction_transfer_from_ne_to",
-                check=(~Q(type="TRANSFER")) | (~Q(from_asset_source=F("to_asset_source"))),
+                condition=(~Q(type="TRANSFER")) | (~Q(from_asset_source=F("to_asset_source"))),
             ),
         ]
 
