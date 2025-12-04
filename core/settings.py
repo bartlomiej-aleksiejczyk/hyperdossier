@@ -134,10 +134,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 AUTH_USER_MODEL = "common.CustomizedUser"
-ADMIN_CUSTOM_USERLINKS = [
-    {"label": "Transactions", "url_name": "finances:transaction_list"},
-]
-
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 MEDIA_URL = "/hyperadmin/files/"

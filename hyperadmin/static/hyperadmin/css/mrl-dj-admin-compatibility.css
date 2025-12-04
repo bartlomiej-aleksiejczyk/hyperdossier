@@ -1,14 +1,32 @@
+@layer base, overrides;
+
 div.breadcrumbs {
   height: inherit;
   display: flex;
   align-items: center;
   flex-direction: row;
   gap: 0.4rem;
+  background-color: var(--color-secondary-lighter);
+  color: var(--color-text-primary);
+  a {
+    color: var(--color-link);
+    &:hover {
+      color: var(--color-link-hover);
+    }
+  }
+}
+#site-name a:link,
+#site-name a:visited {
+  color: var(--color-text-on-primary);
+  margin-bottom: 0.3rem;
+  font-family: Georgia, "Liberation Serif", serif;
+  font-size: xx-large;
 }
 
 .module table {
   width: 100%;
 }
+
 .object-tools {
   margin-top: -28px;
 }
@@ -16,14 +34,17 @@ div.breadcrumbs {
 .inline-group .tabular td.original p {
   height: auto;
 }
+
 .responsive-container.large {
   margin-left: var(--stt-primary-sidebar-width);
   max-width: unset;
 }
+
 .submit-row a.deletelink {
   height: 2.1875rem;
   line-height: 0.9375rem;
 }
+
 @media (max-width: 768px) {
   fieldset {
     min-width: fit-content;
@@ -32,16 +53,22 @@ div.breadcrumbs {
     padding: 0;
   }
 }
+
 td.delete {
   display: flex;
   justify-content: center;
 }
+
 /* This one may break a lot of things silently */
 .inline-related.tabular fieldset.module table {
   display: block;
   overflow: auto;
 }
+
 .login {
+  .stt-primary-topbar-content {
+    margin: auto;
+  }
   .hyp-container {
     background: var(--body-bg);
     border: 1px solid var(--hairline-color);
@@ -81,8 +108,133 @@ a:not(
   text-decoration: none;
 }
 
-/* TODO: ADD THIS TO CORE */
-/* #site-name a {
-  font-size: 2rem;
+.user-sidebar-header {
+  font-weight: 300;
+  font-size: 0.6875rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* TODO: ADD THIS TO MRL */
+/* Simple CSS Convention
+/* Use dash in regulakr class names stt-button
+/* Use an underscore to signal dependency from other element"stt-primary-sidebar___item"
+/* Use triple underscore when doing a customization for an element "stt-button stt-button---block" 
+ */
+
+/* TODO: ADD THIS TO MRL */
+.stt-button.stt-button---block {
+  width: 95%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  font-size: large;
+  font-weight: bold;
+  color: var(--color-text-secondary);
+  border: 2;
+  padding: 0 0.2rem;
+  margin: 0.75rem auto;
+  border-radius: var(--border-radius-medium);
+  height: 2.75rem;
+  transition: outline 100 ease-in-out;
+  &:hover {
+    transition: outline 100 ease-in-out;
+    outline: 2px solid var(--color-secondary-darker);
+  }
+}
+.stt-button.stt-button---block.stt-button---logout {
+  background-color: var(--color-primary);
+  color: var(--color-text-on-primary-darker);
+  &:hover {
+    color: var(--color-text-on-primary);
+  }
+  svg path {
+    fill: var(--color-text-on-primary-darker);
+    &:hover {
+      fill: var(--color-text-on-primary);
+    }
+  }
+  svg path:hover {
+    fill: var(--color-text-on-primary);
+  }
+}
+.stt-primary-sidebar___top-section {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 0.7rem;
+  align-content: center;
+}
+
+.stt-primary-sidebar___top-section___header {
+  margin: auto 0;
+  height: 3.5rem;
+  align-items: center;
+  display: flex;
+  margin-bottom: 0.3rem;
   font-family: Georgia, "Liberation Serif", serif;
-} */
+  font-size: x-large;
+}
+
+.stt-primary-sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.stt-primary-sidebar hr {
+  margin: 0 0.6rem 1rem 0.6rem;
+}
+
+/* Vanilla tweaks to refactor later */
+@media (max-width: 767px) {
+  #content-main .object-tools {
+    text-align: right;
+  }
+}
+
+.stt-primary-sidebar___top-section___header strong {
+  font-weight: bold;
+}
+
+.stt-primary-sidebar___items-container {
+  display: flex;
+  overflow: scroll;
+  flex-direction: column;
+  width: 95%;
+  border-radius: var(--border-radius-medium);
+  margin: 0 auto;
+  position: relative;
+}
+
+#nav-filter.stt-primary-sidebar___container-search {
+  padding: 0.5rem;
+  border: 2px solid var(--color-secondary-darker);
+  border-radius: var(--border-radius-medium);
+  margin: 0rem auto 1rem;
+  width: 95%;
+  display: block;
+  justify-content: center;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+}
+.module {
+  margin-bottom: 5px;
+}
+
+.stt-primary-sidebar___upper-section {
+  display: flex;
+  overflow: scroll;
+  flex-direction: column;
+  width: 100%;
+  border-radius: var(--border-radius-medium);
+  margin: 0 auto 0.8rem auto;
+}
+.stt-primary-sidebar___items-container td {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  padding-right: 2ch;
+}
+.stt-primary-sidebar___bottom-section {
+  margin-bottom: 1rem;
+}

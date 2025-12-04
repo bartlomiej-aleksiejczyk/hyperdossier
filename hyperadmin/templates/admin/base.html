@@ -1,4 +1,4 @@
-{% load i18n static admin_userlinks %}
+{% load i18n static %}
 <!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}"
@@ -52,41 +52,20 @@
         <header class="stt-component">
           {% if not is_popup %}
             <div class="stt-primary-topbar">
-              <div id="branding">
-                {% block branding %}
-                {% endblock branding %}
+              <div class="stt-primary-topbar-content">
+                <button data-stt-action="toggle" class="stt-button">
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                       height="40px"
+                       viewBox="0 -960 960 960"
+                       width="40px">
+                    <path d="M120-240v-66.67h720V-240H120Zm0-206.67v-66.66h720v66.66H120Zm0-206.66V-720h720v66.67H120Z"></path>
+                  </svg>
+                </button>
+                <div id="branding">
+                  {% block branding %}
+                  {% endblock branding %}
+                </div>
               </div>
-              {% block usertools %}
-                {% if has_permission %}
-                  <div id="user-tools">
-                    {% block welcome-msg %}
-                      {% translate "Welcome," %}
-                      <strong>{% firstof user.get_short_name user.get_username %}</strong>.
-                    {% endblock welcome-msg %}
-                    {% block userlinks %}
-                      {% admin_userlinks as links %}
-                      {% for label, url in links %}<a href="{{ url }}" target="_blank">{{ label }}</a> /{% endfor %}
-                      {% if site_url %}
-                        <a href="{{ site_url }}">{% translate 'View site' %}</a> /
-                      {% endif %}
-                      {% if user.is_active and user.is_staff %}
-                        {% url 'django-admindocs-docroot' as docsroot %}
-                        {% if docsroot %}
-                          <a href="{{ docsroot }}">{% translate 'Documentation' %}</a> /
-                        {% endif %}
-                      {% endif %}
-                      {% if user.has_usable_password %}
-                        <a href="{% url 'admin:password_change' %}">{% translate 'Change password' %}</a> /
-                      {% endif %}
-                      <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
-                        {% csrf_token %}
-                        <button type="submit">{% translate 'Log out' %}</button>
-                      </form>
-                      {% include "admin/color_theme_toggle.html" %}
-                    {% endblock userlinks %}
-                  </div>
-                {% endif %}
-              {% endblock usertools %}
             </div>
             {% block nav-global %}
             {% endblock nav-global %}
@@ -109,9 +88,9 @@
               </nav>
             {% endblock nav-breadcrumbs %}
           {% endif %}
+          <div class="stt-overlay" data-stt-element="overlay"></div>
         </header>
       {% endblock %}
-      <div class="stt-overlay" data-stt-element="overlay"></div>
       <div class="responsive-container large stt-navigation-main-content"
            id="main">
         <main id="content-start" class="content" tabindex="-1">
