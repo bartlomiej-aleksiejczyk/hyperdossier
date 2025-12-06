@@ -38,11 +38,7 @@
             <div class="stt-primary-sidebar" data-stt-element="sidebar">
                 <div class="stt-primary-sidebar___upper-section">
                     <div class="stt-primary-sidebar-top">
-                        {% if user.is_authenticated %}
-                            <h2>Welcome, {{ user.get_username }}.</h2>
-                        {% else %}
-                            <h2>Welcome, Anonymous.</h2>
-                        {% endif %}
+                        <h2>Choose a note:</h2>
                         <button data-stt-action="dismiss" class="stt-button">
                             <svg xmlns="http://www.w3.org/2000/svg"
                                  height="40px"
@@ -53,11 +49,7 @@
                             </svg>
                         </button>
                     </div>
-                    <hr />
                     <div class="stt-primary-sidebar__list-container">
-                        <nav class="navigation-tabs">
-                            <a>Notes</a> <a class="navigation-tabs--selected">Categories</a> <a>List Jobs</a>
-                        </nav>
                         <input type="text"
                                data-clickable-item-list-filter=""
                                class="stt-primary-sidebar__block stt-primary-sidebar__filter"
@@ -67,10 +59,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="stt-primary-sidebar___bottom-section">
-                    <hr />
-                    {% include "sidebar/user_profile_details.html" %}
-                </div>
+                <div class="stt-primary-sidebar___bottom-section">{% include "sidebar/user_profile_details.html" %}</div>
             </div>
         {% endblock sidebar %}
         {% block topbar-secondary %}
