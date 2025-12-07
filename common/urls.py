@@ -20,5 +20,5 @@ urlpatterns = [
     ),
     path("health/", views.health, name="health"),
     path("layout-test/", views.layout_test),
-    path("settings", views.settings_view, name="settings"),
+    path("settings/", views.settings_view, name="settings"),
 ]
