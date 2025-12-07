@@ -1,0 +1,37 @@
+{% extends "base_layout.html" %}
+{% load i18n %}
+{% block content %}
+    <main class="responsive-container">
+        <div class="module" id="settings-root">
+            <div class="settings-columns">
+                <div class="settings-column">
+                    <h2>{% translate "Account" %}</h2>
+                    <ul class="settings-list">
+                        <li>
+                            <form class="stt-primary-sidebar__block select-small-form hidden-form">
+                                <label for="realm">Select your realm:</label>
+                                <select name="realm" id="realm-select" class=" select-small-form__select">
+                                    <option value="">--Please choose an option--</option>
+                                </select>
+                                <button class="select-small-form__submit" type="button">Switch</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+                <div class="settings-column">
+                    <h2>{% translate "Help & docs" %}</h2>
+                    <ul class="settings-list">
+                        {% if docsroot %}
+                            <li>
+                                <a href="{{ docsroot }}">{% translate "Django admin documentation" %}</a>
+                            </li>
+                        {% endif %}
+                        <li>
+                            <a href="mailto:support@example.com">{% translate "Report a bug" %}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

@@ -28,7 +28,7 @@ urlpatterns = [
             [
                 path("admin/doc/", include("django.contrib.admindocs.urls")),
                 path("admin/", hyperadmin.urls),
-                path("", include("common.urls")),
+                path("", include("common.urls", namespace="common")),
                 path("finances/", include("finances.urls", namespace="finances")),
             ]
         ),

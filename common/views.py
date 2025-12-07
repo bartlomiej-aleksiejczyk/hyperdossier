@@ -1,5 +1,6 @@
 import mimetypes
 from pathlib import Path
+from django.urls import NoReverseMatch, path, reverse
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -74,3 +75,27 @@ def health(request):
 
 def layout_test(request):
     return TemplateResponse(request, "base_layout.html")
+
+
+def settings_view(request):
+    """
+    "Settings" page inside admin, using HyperadminSite context.
+    """
+    try:
+        docsroot = reverse("django-admindocs-docroot")
+    except NoReverseMatch:
+        docsroot = None
+    try:
+        profile_url = reverse("settings:settings", args=[request.user.pk])
+    except NoReverseMatch:
+        profile_url = None
+    context = dict(
+        title=("Settings"),
+        docsroot=docsroot,
+        profile_url=profile_url,
+    )
+    return TemplateResponse(
+        request,
+        "settings.html",
+        context,
+    )

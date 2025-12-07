@@ -199,4 +199,4 @@ LOGGING = {
 
 CSRF_TRUSTED_ORIGINS = [f"https://{host.strip()}" for host in ALLOWED_HOSTS]
 
-LOGIN_URL = "admin:login"
+LOGIN_URL = "common:login"
