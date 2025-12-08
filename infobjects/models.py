@@ -1,7 +1,23 @@
 from django.db import models
 
 
+class Category(models.Model):
+    """
+    A simple Category model (not nested).
+    """
+
+    title = models.CharField(max_length=200, unique=True)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+
 class Note(models.Model):
+    class Meta:
+        ordering = ["-updated_at"]
+
     class NoteType(models.TextChoices):
         TEXT = "TEXT", "Text"
         TODO = "TODO", "Todo"
@@ -12,14 +28,22 @@ class Note(models.Model):
         choices=NoteType.choices,
         default=NoteType.TEXT,
     )
+    title = models.CharField(max_length=255)
     content = models.TextField(
         help_text="Text body or JSON string, depending on the type."
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    category = models.ForeignKey(
+        Category,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="notes",
+    )
 
     def __str__(self):
-        return f"{self.get_type_display()} note #{self.pk}"
+        return f"{self.title} ({self.get_type_display()})"
 
 
 class NoteAttachment(models.Model):
@@ -32,6 +56,11 @@ class NoteAttachment(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
     original_name = models.CharField(max_length=255, blank=True)
     mime_type = models.CharField(max_length=100, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.original_name:
+            self.original_name = self.file.name
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.original_name or self.file.name

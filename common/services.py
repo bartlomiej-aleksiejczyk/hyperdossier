@@ -1,4 +1,4 @@
-SIDEBAR_ITEMS_LIST = [["List Notes", "notes:list"]]
+SIDEBAR_ITEMS_LIST = [["List Notes", "infobjects:list"]]
 
 
 def common_context_service():

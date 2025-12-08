@@ -1,0 +1,39 @@
+{% extends "base_layout.html" %}
+{% block content %}
+    <h1>Categories</h1>
+    <section>
+        <h2>Create new category</h2>
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div>
+                {{ form.title.label_tag }}
+                {{ form.title }}
+                {{ form.title.errors }}
+            </div>
+            <button type="submit">Add</button>
+        </form>
+    </section>
+    <hr>
+    <section>
+        <h2>Existing categories</h2>
+        {% if categories %}
+            <ul>
+                {% for category in categories %}
+                    <li>
+                        {{ category.title }}
+                        &middot;
+                        <a href="{% url 'infobjects:category_edit' category.pk %}">Edit</a>
+                        &middot;
+                        <a href="{% url 'infobjects:category_delete' category.pk %}">Delete</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No categories yet.</p>
+        {% endif %}
+    </section>
+    <p>
+        <a href="{% url 'infobjects:note_list' %}">Back to notes</a>
+    </p>
+{% endblock content %}

@@ -1,0 +1,76 @@
+{% extends "base_layout.html" %}
+{% block content %}
+  <form method="post" id="note-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+  </form>
+  <p id="autosave-status"></p>
+  <script>
+  const form = document.getElementById("note-form");
+  const textarea = form.querySelector("textarea[name='content']");
+  const titleInput = form.querySelector("input[name='title']");
+  const typeSelect = form.querySelector("select[name='type']");
+  const categorySelect = form.querySelector("select[name='category']");
+  const statusEl = document.getElementById("autosave-status");
+
+  let autosaveTimer = null;
+
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let cookie of cookies) {
+        cookie = cookie.trim();
+        if (cookie.startsWith(name + "=")) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+  const csrftoken = getCookie("csrftoken");
+
+  function autosave() {
+    const url = "{% url 'infobjects:note_detail' object.pk %}";  // UpdateView passes object
+    const payload = {
+      title: titleInput.value,
+      content: textarea.value,
+      type: typeSelect.value,
+      category: categorySelect.value || null,
+    };
+
+    statusEl.textContent = "Saving…";
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken,
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "ok") {
+          statusEl.textContent = "Saved at " + new Date().toLocaleTimeString();
+        } else {
+          statusEl.textContent = "Autosave error";
+        }
+      })
+      .catch(() => {
+        statusEl.textContent = "Autosave failed";
+      });
+  }
+
+  function scheduleAutosave() {
+    clearTimeout(autosaveTimer);
+    autosaveTimer = setTimeout(autosave, 600); // 600ms after last keystroke
+  }
+
+  textarea.addEventListener("input", scheduleAutosave);
+  titleInput.addEventListener("input", scheduleAutosave);
+  typeSelect.addEventListener("change", autosave);
+  categorySelect.addEventListener("change", autosave);
+  </script>
+{% endblock content %}

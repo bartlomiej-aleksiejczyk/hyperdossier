@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host 0.0.0.0 --cors true",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.8",
-    "idiomorph": "^0.7.3",
     "markup-refine-lib": "^0.8.5",
     "tailwindcss": "^4.0.8"
   }

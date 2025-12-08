@@ -91,3 +91,11 @@
     flex-grow: 1;
   }
 }
+
+/* .note-display-widget {
+  height: calc(100vh - var(--stt-primary-topbar-height));
+}
+
+.stt-navigation-main-content.responsive-container.unpadded {
+  padding: 0;
+} */

@@ -1,0 +1,38 @@
+{% extends "base_layout.html" %}
+{% block content %}
+    <h1>Notes</h1>
+    <p>
+        <a href="{% url 'infobjects:note_add' %}">Create new note</a> |
+        <a href="{% url 'infobjects:category_list' %}">Manage categories</a>
+    </p>
+    <form method="get" action="">
+        <label for="id_category_filter">Filter by category:</label>
+        <select name="category" id="id_category_filter" onchange="this.form.submit()">
+            <option value="">-- All --</option>
+            {% for cat in categories %}
+                <option value="{{ cat.pk }}"
+                        {% if cat.pk|stringformat:"s" == request.GET.category %}selected{% endif %}>
+                    {{ cat.title }}
+                </option>
+            {% endfor %}
+        </select>
+        <noscript>
+            <button type="submit">Apply</button>
+        </noscript>
+    </form>
+    <hr>
+    {% if notes %}
+        <ul>
+            {% for note in notes %}
+                <li>
+                    <a href="{% url 'infobjects:note_edit' note.pk %}">{{ note.title }}</a>
+                    {% if note.category %}<small>(Category: {{ note.category.title }})</small>{% endif %}
+                    &middot;
+                    <a href="{% url 'infobjects:note_delete' note.pk %}">Delete</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No notes found.</p>
+    {% endif %}
+{% endblock content %}

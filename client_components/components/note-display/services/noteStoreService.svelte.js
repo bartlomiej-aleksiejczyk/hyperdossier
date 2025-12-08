@@ -22,6 +22,7 @@ export function noteStoreService() {
           selectedNote.title = data.result.note_title;
           selectedNote.content = data.result.note_content;
           selectedNote.type = data.result.note_type;
+          selectedNote.attachments = data.result.note_attachments || [];
         }
       })
       .catch((err) => console.error("Ajax error:", err));

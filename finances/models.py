@@ -6,12 +6,12 @@ from django.utils import timezone
 
 
 class Unit(models.Model):
-    code = models.CharField(max_length=8, unique=True)                 # "PLN", "USD", "XAU"
-    symbol = models.CharField(max_length=8)                            # "z\u0142", "$", "oz"
+    code = models.CharField(max_length=8, unique=True)
+    symbol = models.CharField(max_length=8)
     name = models.CharField(max_length=64)
     decimals = models.PositiveSmallIntegerField(
-        validators=[MinValueValidator(0), MaxValueValidator(12)],      # allow fiat/crypto/commodities
-        help_text="Number of fractional digits used for this unit."
+        validators=[MinValueValidator(0), MaxValueValidator(12)],
+        help_text="Number of fractional digits used for this unit.",
     )
 
     class Meta:
@@ -28,7 +28,6 @@ class OwningSubject(models.Model):
         ORGANIZATION = "ORGANIZATION", "Organization"
         OTHER = "OTHER", "Other"
 
-
     name = models.CharField(max_length=128)
     type = models.CharField(max_length=16, choices=Type.choices, blank=True, null=True)
 
@@ -40,7 +39,9 @@ class OwningSubject(models.Model):
 
 
 class Project(models.Model):
-    subject = models.ForeignKey(OwningSubject, on_delete=models.CASCADE, related_name="projects")
+    subject = models.ForeignKey(
+        OwningSubject, on_delete=models.CASCADE, related_name="projects"
+    )
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True)
 
@@ -63,11 +64,17 @@ class AssetSource(models.Model):
         CRYPTO_WALLET = "CRYPTO_WALLET", "Crypto Wallet"
         OTHER = "OTHER", "Other"
 
-    subject = models.ForeignKey(OwningSubject, on_delete=models.CASCADE, related_name="asset_sources")
+    subject = models.ForeignKey(
+        OwningSubject, on_delete=models.CASCADE, related_name="asset_sources"
+    )
     name = models.CharField(max_length=128)
     type = models.CharField(max_length=64, choices=Type.choices)
-    unit = models.ForeignKey(Unit, on_delete=models.PROTECT, related_name="asset_sources")
-    external_id = models.CharField(max_length=64, blank=True, null=True, help_text="IBAN, last4, etc.")
+    unit = models.ForeignKey(
+        Unit, on_delete=models.PROTECT, related_name="asset_sources"
+    )
+    external_id = models.CharField(
+        max_length=64, blank=True, null=True, help_text="IBAN, last4, etc."
+    )
     active = models.BooleanField(default=True)
 
     class Meta:
@@ -83,9 +90,13 @@ class AssetSource(models.Model):
 
 
 class ExchangeRate(models.Model):
-    from_unit = models.ForeignKey(Unit, on_delete=models.PROTECT, related_name="rates_from")
+    from_unit = models.ForeignKey(
+        Unit, on_delete=models.PROTECT, related_name="rates_from"
+    )
     to_unit = models.ForeignKey(Unit, on_delete=models.PROTECT, related_name="rates_to")
-    rate = models.DecimalField(max_digits=24, decimal_places=12, validators=[MinValueValidator(0.000000000001)])
+    rate = models.DecimalField(
+        max_digits=24, decimal_places=12, validators=[MinValueValidator(0.000000000001)]
+    )
     valid_at = models.DateTimeField()
 
     class Meta:
@@ -125,7 +136,9 @@ class Transaction(models.Model):
         GIFTS_FAMILY = "GIFTS_FAMILY", "Gifts & Family"
         OTHER = "OTHER", "Other"
 
-    subject = models.ForeignKey(OwningSubject, on_delete=models.CASCADE, related_name="transactions")
+    subject = models.ForeignKey(
+        OwningSubject, on_delete=models.CASCADE, related_name="transactions"
+    )
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
 
@@ -134,21 +147,37 @@ class Transaction(models.Model):
         max_digits=20,
         decimal_places=8,
         validators=[MinValueValidator(0.00000001)],
-        help_text="Always positive. Direction is implied by type."
+        help_text="Always positive. Direction is implied by type.",
     )
-    unit = models.ForeignKey(Unit, on_delete=models.PROTECT, related_name="transactions")
+    unit = models.ForeignKey(
+        Unit, on_delete=models.PROTECT, related_name="transactions"
+    )
 
     occurred_at = models.DateTimeField()
     created_at = models.DateTimeField(default=timezone.now, editable=False)
 
     category = models.CharField(max_length=32, choices=Category.choices)
-    project = models.ForeignKey(Project, on_delete=models.SET_NULL, related_name="transactions", null=True, blank=True)
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.SET_NULL,
+        related_name="transactions",
+        null=True,
+        blank=True,
+    )
 
     from_asset_source = models.ForeignKey(
-        AssetSource, on_delete=models.PROTECT, null=True, blank=True, related_name="outgoing_transactions"
+        AssetSource,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="outgoing_transactions",
     )
     to_asset_source = models.ForeignKey(
-        AssetSource, on_delete=models.PROTECT, null=True, blank=True, related_name="incoming_transactions"
+        AssetSource,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="incoming_transactions",
     )
 
     class Meta:
@@ -160,20 +189,33 @@ class Transaction(models.Model):
             models.Index(fields=["project"]),
         ]
         constraints = [
-            models.CheckConstraint(name="transaction_amount_gt_zero", condition=Q(amount__gt=0)),
+            models.CheckConstraint(
+                name="transaction_amount_gt_zero", condition=Q(amount__gt=0)
+            ),
             models.CheckConstraint(
                 name="transaction_from_to_by_type",
                 condition=(
-                    (Q(type="INCOME") & Q(to_asset_source__isnull=False) & Q(from_asset_source__isnull=True))
-                    |
-                    (Q(type="EXPENSE") & Q(from_asset_source__isnull=False) & Q(to_asset_source__isnull=True))
-                    |
-                    (Q(type="TRANSFER") & Q(from_asset_source__isnull=False) & Q(to_asset_source__isnull=False))
+                    (
+                        Q(type="INCOME")
+                        & Q(to_asset_source__isnull=False)
+                        & Q(from_asset_source__isnull=True)
+                    )
+                    | (
+                        Q(type="EXPENSE")
+                        & Q(from_asset_source__isnull=False)
+                        & Q(to_asset_source__isnull=True)
+                    )
+                    | (
+                        Q(type="TRANSFER")
+                        & Q(from_asset_source__isnull=False)
+                        & Q(to_asset_source__isnull=False)
+                    )
                 ),
             ),
             models.CheckConstraint(
                 name="transaction_transfer_from_ne_to",
-                condition=(~Q(type="TRANSFER")) | (~Q(from_asset_source=F("to_asset_source"))),
+                condition=(~Q(type="TRANSFER"))
+                | (~Q(from_asset_source=F("to_asset_source"))),
             ),
         ]
 
@@ -185,22 +227,35 @@ class Transaction(models.Model):
         """
         from django.core.exceptions import ValidationError
 
-        if self.from_asset_source and self.from_asset_source.subject_id != self.subject_id:
-            raise ValidationError("from_asset_source must belong to the same subject as the transaction.")
+        if (
+            self.from_asset_source
+            and self.from_asset_source.subject_id != self.subject_id
+        ):
+            raise ValidationError(
+                "from_asset_source must belong to the same subject as the transaction."
+            )
 
         if self.to_asset_source and self.to_asset_source.subject_id != self.subject_id:
-            raise ValidationError("to_asset_source must belong to the same subject as the transaction.")
+            raise ValidationError(
+                "to_asset_source must belong to the same subject as the transaction."
+            )
 
         if self.project and self.project.subject_id != self.subject_id:
-            raise ValidationError("project must belong to the same subject as the transaction.")
+            raise ValidationError(
+                "project must belong to the same subject as the transaction."
+            )
 
     def __str__(self):
         return f"{self.get_type_display()} {self.amount} {self.unit.code} \u2014 {self.title}"
 
 
 class UserPreferences(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="preferences")
-    default_unit = models.ForeignKey(Unit, on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="preferences"
+    )
+    default_unit = models.ForeignKey(
+        Unit, on_delete=models.SET_NULL, null=True, blank=True
+    )
     timezone = models.CharField(max_length=64, default="Europe/Warsaw")
     locale = models.CharField(max_length=16, default="pl_PL")
 
@@ -214,8 +269,14 @@ class SubjectUserAccess(models.Model):
         EDITOR = "EDITOR", "Editor"
         VIEWER = "VIEWER", "Viewer"
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="subject_access")
-    subject = models.ForeignKey(OwningSubject, on_delete=models.CASCADE, related_name="user_access")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="subject_access",
+    )
+    subject = models.ForeignKey(
+        OwningSubject, on_delete=models.CASCADE, related_name="user_access"
+    )
     role = models.CharField(max_length=8, choices=Role.choices)
 
     class Meta:

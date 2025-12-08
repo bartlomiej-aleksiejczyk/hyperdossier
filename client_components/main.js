@@ -1,4 +1,4 @@
-import "vite/modulepreload-polyfill";
+import "../node_modules/markup-refine-lib/dist/markup-refine-lib-interactive-components";
 import "./main.css";
 
 import "./components/note-display/NoteDisplay.svelte";

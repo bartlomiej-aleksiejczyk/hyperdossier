@@ -20,31 +20,38 @@ def load_client_components():
     # **Production Mode Settings**
     client_components_static_url = getattr(settings, "STATIC_URL", "/static/")
     manifest_path = CLIENT_COMPONENT_SETTINGS.get(
-        "MANIFEST_FILE_PATH", os.path.join(settings.BASE_DIR, "dist", ".vite", "manifest.json")
+        "MANIFEST_FILE_PATH",
+        os.path.join(settings.BASE_DIR, "dist", ".vite", "manifest.json"),
     )
     vite_dev_url = CLIENT_COMPONENT_SETTINGS.get("DEV_URL", "http://localhost:5173/")
-    client_components_path = CLIENT_COMPONENT_SETTINGS.get("CLIENT_COMPONENTS_PATH", "client_components/")
+    client_components_path = CLIENT_COMPONENT_SETTINGS.get(
+        "CLIENT_COMPONENTS_PATH", "client_components/"
+    )
 
     tags = []
 
     # **If in Development Mode, inject Vite Dev Server links**
     if is_debug:
         return mark_safe(
-            f'''
+            f"""
             <script type="module" src="{vite_dev_url}@vite/client"></script>
             <script type="module" src="{vite_dev_url}{client_components_path}main.js"></script>
-            '''
+            """
         )
 
     # **If in Production Mode, load from manifest.json**
     if not os.path.exists(manifest_path):
-        raise template.TemplateSyntaxError(f"Vite manifest.json not found at {manifest_path}")
+        raise template.TemplateSyntaxError(
+            f"Vite manifest.json not found at {manifest_path}"
+        )
 
     try:
         with open(manifest_path, "r", encoding="utf-8") as f:
             manifest = json.load(f)
     except Exception as e:
-        raise template.TemplateSyntaxError(f"Error loading Vite manifest.json: {str(e)}")
+        raise template.TemplateSyntaxError(
+            f"Error loading Vite manifest.json: {str(e)}"
+        )
 
     # **Extract JS & CSS files**
     js_files = {k: v for k, v in manifest.items() if k.endswith(".js")}

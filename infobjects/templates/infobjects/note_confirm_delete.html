@@ -1,0 +1,13 @@
+{% extends "base_layout.html" %}
+{% block content %}
+    <h1>Delete note</h1>
+    <p>
+        Are you sure you want to delete note
+        "<strong>{{ object.title }}</strong>"?
+    </p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Yes, delete</button>
+        <a href="{% url 'infobjects:note_list' %}">Cancel</a>
+    </form>
+{% endblock content %}

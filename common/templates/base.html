@@ -4,16 +4,16 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
         <link rel="icon"
               type="image/png"
               sizes="16x16"
               href="{% static 'favicon.ico' %}">
         {% load_client_components %}
         {% block meta %}
-            <link rel="stylesheet"
-                  href="https://cdn.jsdelivr.net/gh/bartlomiej-aleksiejczyk/markup-refine-lib@0.8.6/dist/markup-refine-lib.min.css" />
-            <script src="https://cdn.jsdelivr.net/gh/bartlomiej-aleksiejczyk/markup-refine-lib@0.8.6/dist/markup-refine-lib-javascript-attribute-components.js" /></script>
+            {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bartlomiej-aleksiejczyk/markup-refine-lib@0.8.6/dist/markup-refine-lib.min.css" />
+            <script src="https://cdn.jsdelivr.net/gh/bartlomiej-aleksiejczyk/markup-refine-lib@0.8.6/dist/markup-refine-lib-javascript-attribute-components.js" /></script> {% endcomment %}
         {% endblock meta %}
         <title>
             {% block title %}
@@ -38,10 +38,12 @@
                 {% endblock topbar-secondary %}
             </header>
         {% endblock header %}
-        <main>
-            {% block content %}
-            {% endblock content %}
-        </main>
+        {% block main %}
+            <main class="responsive-container stt-navigation-main-content">
+                {% block content %}
+                {% endblock content %}
+            </main>
+        {% endblock main %}
         {% block footer %}
         {% endblock footer %}
         {% block inlinecss %}

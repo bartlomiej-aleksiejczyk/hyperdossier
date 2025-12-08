@@ -1,0 +1,9 @@
+{% extends "base_layout.html" %}
+{% block main %}
+    <main class="responsive-container stt-navigation-main-content unpadded">
+        <section>
+            <note-display class="grow flex note-display-widget" class="grow flex w-[100%]" ajaxNoteEndpoint= '{% url 'infobjects_api:note_detail_ajax' note.pk %}' selectednoteid='{{ note.pk }}' csrftoken="{{ csrf_token }}">
+            </note-display>
+        </section>
+    </main>
+{% endblock main %}

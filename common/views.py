@@ -39,7 +39,6 @@ def protected_media(request, relative_path: str):
     # --- DEV MODE --------------------------------------------------------
     # If running Django dev server, serve file bytes directly
     if settings.DEBUG or getattr(settings, "RUNSERVER", False):
-        # HEAD request \u2192 empty body but same headers
         if request.method == "HEAD":
             response = HttpResponse(content_type=content_type)
             response["Content-Length"] = requested.stat().st_size
@@ -48,7 +47,6 @@ def protected_media(request, relative_path: str):
             )
             return response
 
-        # GET request \u2192 send file bytes
         return FileResponse(
             open(requested, "rb"),
             content_type=content_type,

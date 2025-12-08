@@ -25,7 +25,7 @@ if RUNSERVER:
     # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
     DEBUG = True
     SECRET_KEY = "django-insecure-5l!6pv4po0p$oi2oq4piu=am_i(6)2+x10(ajw%5l=2-y1vcv)"
-    ALLOWED_HOSTS = ["0.0.0.0", "localhost", "127.0.0.1"]
+    ALLOWED_HOSTS = ["0.0.0.0", "localhost", "127.0.0.1", "192.168.0.25"]
 else:
     # SECURITY WARNING: keep the secret key used in production secret!
     SECRET_KEY = os.getenv("SECRET_KEY")
@@ -47,13 +47,14 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.admindocs",
     "finances",
-    "notes",
+    "infobjects",
     "hyperadmin",
     "django.contrib.admin",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "core.middleware.SimpleCORSMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -204,4 +205,5 @@ LOGIN_URL = "common:login"
 CLIENT_COMPONENT_SETTINGS = {
     "MANIFEST_FILE_PATH": "client_components__dist/.vite/manifest.json",
     "CLIENT_COMPONENTS_PATH": "client_components/",
+    "DEV_URL": "http://192.168.0.25:5173/",
 }
