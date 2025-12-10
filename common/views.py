@@ -1,5 +1,6 @@
 import mimetypes
 from pathlib import Path
+from django.shortcuts import render
 from django.urls import NoReverseMatch, path, reverse
 
 from django.conf import settings
@@ -93,3 +94,6 @@ def settings_view(request):
         "settings.html",
         context,
     )
+
+def home_index(request) -> HttpResponse:
+    return render(request, "home_index.html")

@@ -37,8 +37,10 @@
         {% block sidebar %}
             <div class="stt-primary-sidebar" data-stt-element="sidebar">
                 <div class="stt-primary-sidebar___upper-section">
+                    <a class="stt-primary-sidebar__back-button"
+                       href="{% url 'common:home_index' %}">← Back to Home</a>
                     <div class="stt-primary-sidebar-top">
-                        <h2>Explore Home:</h2>
+                        <h2>Manage Infobjects:</h2>
                         <button data-stt-action="dismiss" class="stt-button">
                             <svg xmlns="http://www.w3.org/2000/svg"
                                  height="40px"
@@ -52,10 +54,16 @@
                     <div class="stt-primary-sidebar__list-container">
                         <ul class="clickable-item-list">
                             <li>
-                                <a href="{% url 'infobjects:infobjects_index' %}">Browse Infobjects</a>
+                                <a href="{% url 'infobjects:category_list' %}">Browse Categories</a>
                             </li>
                             <li>
-                                <a href="{% url 'admin:index' %}">Admin Page</a>
+                                <a href="{% url 'infobjects:category_new' %}">Add a new Category</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'infobjects:note_list' %}">Browse Notes</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'infobjects:note_add' %}">Add a new Note</a>
                             </li>
                         </ul>
                     </div>
@@ -64,6 +72,9 @@
             </div>
         {% endblock sidebar %}
         {% block topbar-secondary %}
+            <div class="stt-secondary-topbar">
+                <div class="secondary-topbar-content centered-breadcrumbs">{% include 'breadcrumbs.html' %}</div>
+            </div>
         {% endblock topbar-secondary %}
         <div class="stt-overlay" data-stt-element="overlay"></div>
     </header>

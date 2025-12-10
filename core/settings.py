@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'django.contrib.sitemaps',
+    "django.contrib.sites",
     "django.contrib.admindocs",
     "finances",
     "infobjects",
@@ -60,6 +62,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "django.contrib.auth.middleware.LoginRequiredMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "iommi.middleware",
 ]
@@ -208,17 +211,20 @@ CLIENT_COMPONENT_SETTINGS = {
     "CLIENT_COMPONENTS_PATH": "client_components/",
     "DEV_URL": "http://127.0.0.1:5173/",
 }
-from iommi import Style, Asset
+from iommi import Style, Asset, register_style
 from iommi.style_bootstrap import bootstrap
+from iommi.style_base import base
 
+from iommi.style_vanilla_css import vanilla_css
 IOMMI_DEBUG_URL_BUILDER = lambda filename, lineno: "vscode://file/%s:" % (filename,) + (
     "" if lineno is None else "%d" % (lineno,)
 )
 IOMMI_DEFAULT_STYLE = Style(
-    bootstrap,
+    vanilla_css,
     base_template="base_layout.html",
     # root__assets=dict(
     #     my_project_custom_css=Asset.css(attrs__href="/static/custom.css"),
     #     my_project_custom_js=Asset.js(attrs__src="/static/custom.js"),
     # ),
 )
+SITE_ID = 1

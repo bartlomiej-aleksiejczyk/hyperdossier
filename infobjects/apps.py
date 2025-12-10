@@ -1,8 +1,9 @@
 from django.apps import AppConfig
 from django.template.response import TemplateResponse
+from iommi import Style, register_style
 from iommi.path import register_path_decoding
+from iommi.style_base import base
 from hyperadmin.hooks import register_admin_action, register_admin_view
-
 
 def make_system_dashboard_view(admin_site):
     def view(request):
@@ -39,3 +40,4 @@ class InfobjectsConfig(AppConfig):
         register_path_decoding(
             category_pk=Category,
         )
+        register_style("infobjects_style", Style(base, base_template='infobjects/infobjects_layout.html'))

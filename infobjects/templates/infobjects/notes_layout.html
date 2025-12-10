@@ -37,8 +37,10 @@
         {% block sidebar %}
             <div class="stt-primary-sidebar" data-stt-element="sidebar">
                 <div class="stt-primary-sidebar___upper-section">
+                    <a class="stt-primary-sidebar__back-button"
+                       href="{% url 'infobjects:infobjects_index' %}">← Back to Infobjects</a>
                     <div class="stt-primary-sidebar-top">
-                        <h2>Explore Home:</h2>
+                        <h2>Choose a note:</h2>
                         <button data-stt-action="dismiss" class="stt-button">
                             <svg xmlns="http://www.w3.org/2000/svg"
                                  height="40px"
@@ -50,13 +52,12 @@
                         </button>
                     </div>
                     <div class="stt-primary-sidebar__list-container">
+                        <input type="text"
+                               data-clickable-item-list-filter=""
+                               class="stt-primary-sidebar__block stt-primary-sidebar__filter"
+                               placeholder="Filter menu...">
                         <ul class="clickable-item-list">
-                            <li>
-                                <a href="{% url 'infobjects:infobjects_index' %}">Browse Infobjects</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'admin:index' %}">Admin Page</a>
-                            </li>
+                            {% include "sidebar/menu_items.html" with items=menu_items %}
                         </ul>
                     </div>
                 </div>

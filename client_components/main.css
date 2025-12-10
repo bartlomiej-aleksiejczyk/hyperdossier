@@ -1,7 +1,6 @@
+@import "markup-refine-lib/dist/markup-refine-lib.css";
 @import "./styles/common/common.css";
 @import "./styles/common/sidebar/user_profile_details.css";
-@import "markup-refine-lib/dist/markup-refine-lib.css";
-
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
 

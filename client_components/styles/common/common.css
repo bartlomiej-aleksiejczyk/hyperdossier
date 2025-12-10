@@ -102,3 +102,20 @@
 .table-stretched {
   min-width: 100%;
 }
+a.stt-primary-sidebar__back-button {
+  margin: 0.3rem 0 0 0.6rem;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: small;
+  font-weight: bold;
+  &:visited {
+    color: var(--color-text-secondary);
+  }
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.stt-primary-sidebar___upper-section .stt-primary-sidebar-top h2 {
+  margin: 0.2rem 1rem 0.2rem 1rem;
+  color: var(--color-text-primary);
+}
