@@ -33,6 +33,6 @@ COPY . .
 
 COPY --from=js-builder /app/client_components__dist /app/client_components__dist
 
-RUN python manage.py collectstatic --noinput
+RUN uv run manage.py collectstatic --noinput
 
 CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8000"]
