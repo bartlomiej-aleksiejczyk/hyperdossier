@@ -26,7 +26,6 @@
   }
 
   onMount(() => {
-    // resize once on mount (e.g. when note already has content)
     autoResize();
   });
 </script>

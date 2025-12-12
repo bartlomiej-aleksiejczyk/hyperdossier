@@ -2,6 +2,7 @@
 {% block main %}
     <main class="responsive-container stt-navigation-main-content unpadded">
         <section>
+            <a href="{% url 'infobjects:note_add' %}">Add a New Note</a>
             <note-display class="grow flex note-display-widget" class="grow flex w-[100%]" ajaxNoteEndpoint= '
             {% if note %}
                 {% url 'infobjects_api:note_detail_ajax' note.pk %}
