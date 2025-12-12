@@ -23,25 +23,6 @@ services:
       - SECRET_KEY=${SECRET_KEY}
       - DEBUG=${DEBUG}
 
-  worker:
-    build: .
-    command: >
-      sh -c "python manage.py qcluster"
-    volumes:
-      - ${DJANGO_DB_VOLUME:-hyperdossier_db_data}:/app/var/db
-      - ${DJANGO_STATIC_VOLUME:-hyperdossier_static_data}:/app/var/static
-      - ${DJANGO_MEDIA_VOLUME:-hyperdossier_media_data}:/app/var/media
-      - ${DJANGO_LOGS_VOLUME:-hyperdossier_logs_data}:/app/var/logs
-    depends_on:
-          web:
-            condition: service_healthy
-    networks:
-      - default
-    environment:
-      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
-      - SECRET_KEY=${SECRET_KEY}
-      - DEBUG=${DEBUG}
-
   nginx:
     build:
       context: ./nginx
