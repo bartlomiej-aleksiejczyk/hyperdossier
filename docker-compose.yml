@@ -39,6 +39,7 @@ services:
       - "traefik.http.routers.hyperdossier.rule=PathPrefix(`/hyperdossier`)"
       - "traefik.http.routers.hyperdossier.entrypoints=websecure"
       - "traefik.http.routers.hyperdossier.tls=true"
+      - "traefik.http.routers.hyperdossier.tls.store=vmrt"
 
       - "traefik.http.routers.hyperdossier.service=hyperdossier"
       - "traefik.http.services.hyperdossier.loadbalancer.server.port=80"
