@@ -1,3 +1,4 @@
-- refine navigation
-- detail notes in uinitnuitive
+- refine navigation, split notes, integrated editor and categories
+- refine breadcrumb navigation
+- detail notes is uinitnuitive
 - add realm concept that can conenct entities out of heirarchy
