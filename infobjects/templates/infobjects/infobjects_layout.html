@@ -53,21 +53,27 @@
                     </div>
                     <div class="stt-primary-sidebar__list-container">
                         <ul class="clickable-item-list">
-                            <li>
-                                <a href="{% url 'infobjects:category_list' %}">Browse Categories</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'infobjects:category_new' %}">Add a new Category</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'infobjects:note_list' %}">Browse Notes</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'infobjects:note_add' %}">Add a new Note</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'infobjects:note_integrated_editor' %}">Note Integrated Editor</a>
-                            </li>
+                            <ul>
+                                <h3>Categories</h3>
+                                <li>
+                                    <a href="{% url 'infobjects:category_list' %}">Browse Categories</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'infobjects:category_new' %}">Add a new Category</a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <h3>Notes</h3>
+                                <li>
+                                    <a href="{% url 'infobjects:note_list' %}">Browse Notes</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'infobjects:note_add' %}">Add a new Note</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'infobjects:note_integrated_editor' %}">Note Integrated Editor</a>
+                                </li>
+                            </ul>
                         </ul>
                     </div>
                 </div>
