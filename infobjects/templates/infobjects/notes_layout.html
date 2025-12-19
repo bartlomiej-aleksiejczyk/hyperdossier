@@ -1,94 +1,94 @@
 {% extends "base.html" %}
 {% load i18n static %}
 {% block title %}
-    Hyperdossier
+  Hyperdossier
 {% endblock title %}
 {% block header %}
-    <header class="stt-component">
-        {% block topbar-primary %}
-            <div class="stt-primary-topbar">
-                <div class="stt-primary-topbar-content">
-                    <button data-stt-action="toggle" class="stt-button">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                             height="40px"
-                             viewBox="0 -960 960 960"
-                             width="40px">
-                            <path d="M120-240v-66.67h720V-240H120Zm0-206.67v-66.66h720v66.66H120Zm0-206.66V-720h720v66.67H120Z"></path>
-                        </svg>
-                    </button>
-                    <h1 class="navbar-title">Hyperdossier</h1>
-                    <button class="search-area"
-                            data-search-tool=""
-                            data-mode="dynamic"
-                            data-dynamic-url="{% url 'search_api:global_search_ajax' %}?query=">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                             height="36px"
-                             viewBox="0 -960 960 960"
-                             width="36px"
-                             fill="currentColor">
-                            <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z">
-                            </path>
-                        </svg>
-                        <span class="text">Search...</span>
-                    </button>
-                </div>
+  <header class="stt-component">
+    {% block topbar-primary %}
+      <div class="stt-primary-topbar">
+        <div class="stt-primary-topbar-content">
+          <button data-stt-action="toggle" class="stt-button">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 height="40px"
+                 viewBox="0 -960 960 960"
+                 width="40px">
+              <path d="M120-240v-66.67h720V-240H120Zm0-206.67v-66.66h720v66.66H120Zm0-206.66V-720h720v66.67H120Z"></path>
+            </svg>
+          </button>
+          <h1 class="navbar-title">Hyperdossier</h1>
+          <button class="search-area"
+                  data-search-tool=""
+                  data-mode="dynamic"
+                  data-dynamic-url="{% url 'search_api:global_search_ajax' %}?query=">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 height="36px"
+                 viewBox="0 -960 960 960"
+                 width="36px"
+                 fill="currentColor">
+              <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z">
+              </path>
+            </svg>
+            <span class="text">Search...</span>
+          </button>
+        </div>
+      </div>
+    {% endblock topbar-primary %}
+    {% block sidebar %}
+      <div class="stt-primary-sidebar" data-stt-element="sidebar">
+        <div class="stt-primary-sidebar___upper-section">
+          <a class="stt-primary-sidebar__back-button"
+             href="{% url 'infobjects:infobjects_index' %}">← Back to Infobjects</a>
+          <div class="stt-primary-sidebar-top">
+            <h2>Choose a note:</h2>
+            <button data-stt-action="dismiss" class="stt-button">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                   height="40px"
+                   viewBox="0 -960 960 960"
+                   width="40px">
+                <path d="m251.33-204.67-46.66-46.66L433.33-480 204.67-708.67l46.66-46.66L480-526.67l228.67-228.66 46.66 46.66L526.67-480l228.66 228.67-46.66 46.66L480-433.33 251.33-204.67Z">
+                </path>
+              </svg>
+            </button>
+          </div>
+          <div class="stt-primary-sidebar__list-container">
+            <div class="stt-primary-sidebar__select">
+              <select name="category" id="category-select" class="category-select">
+                <option value=""
+                        disabled
+                        {% if not selected_category %}selected{% endif %}
+                        hidden>- Choose a category -</option>
+                <option value="" {% if not selected_category %}selected{% endif %}>All categories</option>
+                {% for category in categories %}
+                  <option value="{{ category.id }}"
+                          {% if category.id|stringformat:"s" == selected_category %}selected{% endif %}>
+                    {{ category.title }}
+                  </option>
+                {% endfor %}
+              </select>
             </div>
-        {% endblock topbar-primary %}
-        {% block sidebar %}
-            <div class="stt-primary-sidebar" data-stt-element="sidebar">
-                <div class="stt-primary-sidebar___upper-section">
-                    <a class="stt-primary-sidebar__back-button"
-                       href="{% url 'infobjects:infobjects_index' %}">← Back to Infobjects</a>
-                    <div class="stt-primary-sidebar-top">
-                        <h2>Choose a note:</h2>
-                        <button data-stt-action="dismiss" class="stt-button">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 height="40px"
-                                 viewBox="0 -960 960 960"
-                                 width="40px">
-                                <path d="m251.33-204.67-46.66-46.66L433.33-480 204.67-708.67l46.66-46.66L480-526.67l228.67-228.66 46.66 46.66L526.67-480l228.66 228.67-46.66 46.66L480-433.33 251.33-204.67Z">
-                                </path>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="stt-primary-sidebar__list-container">
-                        <div class="stt-primary-sidebar__select">
-                            <select name="category" id="category-select" class="category-select">
-                                <option value=""
-                                        disabled
-                                        {% if not selected_category %}selected{% endif %}
-                                        hidden>- Choose a category -</option>
-                                <option value="" {% if not selected_category %}selected{% endif %}>All categories</option>
-                                {% for category in categories %}
-                                    <option value="{{ category.id }}"
-                                            {% if category.id|stringformat:"s" == selected_category %}selected{% endif %}>
-                                        {{ category.title }}
-                                    </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <input name="filter_note"
-                               type="text"
-                               data-clickable-item-list-filter=""
-                               class="stt-primary-sidebar__block stt-primary-sidebar__filter"
-                               placeholder="Type to filter menu...">
-                        <ul class="clickable-item-list">
-                            {% include "sidebar/menu_items.html" with items=menu_items %}
-                        </ul>
-                    </div>
-                </div>
-                <div class="stt-primary-sidebar___bottom-section">{% include "sidebar/user_profile_details.html" %}</div>
-            </div>
-        {% endblock sidebar %}
-        {% block topbar-secondary %}
-        {% endblock topbar-secondary %}
-        <div class="stt-overlay" data-stt-element="overlay"></div>
-    </header>
+            <input name="filter_note"
+                   type="text"
+                   data-clickable-item-list-filter=""
+                   class="stt-primary-sidebar__block stt-primary-sidebar__filter"
+                   placeholder="Type to filter menu...">
+            <ul class="clickable-item-list">
+              {% include "sidebar/menu_items.html" with items=menu_items %}
+            </ul>
+          </div>
+        </div>
+        <div class="stt-primary-sidebar___bottom-section">{% include "sidebar/user_profile_details.html" %}</div>
+      </div>
+    {% endblock sidebar %}
+    {% block topbar-secondary %}
+    {% endblock topbar-secondary %}
+    <div class="stt-overlay" data-stt-element="overlay"></div>
+  </header>
 {% endblock header %}
 {% block content %}
 {% endblock content %}
 {% block extrajs %}
-    <script>
+  <script>
   document.addEventListener("DOMContentLoaded", () => {
     const categorySelect = document.querySelector("#category-select");
     const listContainer = document.querySelector(".clickable-item-list");
@@ -97,7 +97,7 @@
 
     categorySelect.addEventListener("change", async (event) => {
       const categoryId = event.target.value;
-      const baseUrl = "{% url 'infobjects:note_list' %}";
+      const baseUrl = "{% url 'infobjects:note_integrated_editor' %}";
       const url = new URL(baseUrl, window.location.origin);
 
       if (categoryId) {
@@ -130,5 +130,5 @@
       }
     });
   });
-    </script>
+  </script>
 {% endblock %}

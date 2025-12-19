@@ -51,6 +51,8 @@
 .stt-primary-sidebar___upper-section {
   display: flex;
   overflow: scroll;
+  /* Overflow should be fixed not hidden */
+  overflow-x: hidden;
   flex-direction: column;
   width: 100%;
   border-radius: var(--border-radius-medium);

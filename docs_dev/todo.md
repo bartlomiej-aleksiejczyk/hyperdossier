@@ -2,3 +2,9 @@
 - refine breadcrumb navigation
 - detail notes is uinitnuitive
 - add realm concept that can conenct entities out of heirarchy
+
+===
+
+# Known bugs
+
+Fix sidebar overflow
