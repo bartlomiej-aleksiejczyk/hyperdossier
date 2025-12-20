@@ -163,7 +163,6 @@ def note_list(request):
             get_sidebar_context(request),
             request=request,
         )
-        print(html)
 
         return HttpResponse(html)
     notes = Note.objects.select_related("category").all()
@@ -180,6 +179,13 @@ def note_list(request):
 
 def note_editor(request):
     context = get_sidebar_context(request)
+    if request.headers.get("x-requested-with") == "XMLHttpRequest":
+        html = render_to_string(
+            "sidebar/menu_items.html",
+            context,
+            request=request,
+        )
+        return HttpResponse(html)
     return render(request, "infobjects/note_detail.html", context)
 
 
