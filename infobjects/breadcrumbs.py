@@ -1,32 +1,29 @@
-# infobjects/breadcrumbs.py
 from django.urls import reverse, NoReverseMatch
 
 
-# These will be prepended to every breadcrumb trail
 BASE_CRUMBS = [
-    {"label": "Home", "url_name": "home"},  # change 'home' to your real view name
+    {"label": "Home", "url_name": "home"},
     {
         "label": "Infobjects",
-        "url_name": "infobjects:category_list",  # e.g. main page of this app
+        "url_name": "infobjects:category_list",
     },
 ]
 
 
-# Per-view \u201ctail\u201d definitions
-# You can extend this gradually.
 VIEW_CRUMBS = {
     "infobjects:category_list": [
-        {"label": "Categories", "url_name": None},  # current page
+        {"label": "Categories", "url_name": "infobjects:category_list"},
     ],
     "infobjects:category_edit": [
-        {"label": "Categories", "url_name": "infobjects:category_list"},
+        {"label": "Categories", "url_name": "infobjects:category_edit"},
         {
-            # last node: EDIT <id>
             "label": lambda kwargs: f"Edit {kwargs.get('category_pk')}",
-            "url_name": None,
+            "url_name": "",
         },
     ],
-    # add note_list, note_edit, etc. here later
+    "infobjects:note_list": [
+        {"label": "Notes", "url_name": "infobjects:category_list"},
+    ],
 }
 
 
@@ -56,16 +53,15 @@ def get_breadcrumbs_context(view_name: str, view_kwargs=None) -> dict:
 
     crumbs = []
 
-    # BASE + specific trail for this view
     config = BASE_CRUMBS + VIEW_CRUMBS.get(view_name, [])
 
     for item in config:
         label = item["label"]
         if callable(label):
-            label = label(view_kwargs)  # e.g. lambda kwargs: f"EDIT {kwargs['category_pk']}"
+            label = label(view_kwargs)
 
         url_name = item.get("url_name")
-        kwarg_keys = item.get("kwarg_keys")  # optional per-crumb
+        kwarg_keys = item.get("kwarg_keys")
 
         url = _build_url(url_name, view_kwargs, kwarg_keys)
 
