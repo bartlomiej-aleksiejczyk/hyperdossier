@@ -128,7 +128,37 @@ a.stt-primary-sidebar__back-button {
     text-decoration: underline;
   }
 }
+
 .stt-primary-sidebar___upper-section .stt-primary-sidebar-top h2 {
   margin: 0.2rem 1rem 0.2rem 1rem;
   color: var(--color-text-primary);
+}
+
+.stt-primary-sidebar-tabs {
+  display: flex;
+  background-color: var(--color-secondary-darker);
+  padding: 0.4rem 0.2rem 0;
+}
+
+button.stt-primary-sidebar-tabs__tab {
+  all: unset;
+  display: flex;
+  outline: var(--color-secondary) solid 2px;
+  margin: 0rem 0.2rem;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  outline: revert;
+  transition: transform 0.25s ease;
+  transition: background-color 0.25s ease;
+}
+button.stt-primary-sidebar-tabs__tab:hover {
+  background-color: var(--color-secondary);
+}
+
+button.stt-primary-sidebar-tabs__tab:active {
+  transform: translateY(2px);
+}
+
+button.stt-primary-sidebar-tabs__tab--active {
+  background-color: var(--color-secondary);
 }
