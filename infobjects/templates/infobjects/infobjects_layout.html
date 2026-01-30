@@ -37,14 +37,9 @@
         {% block sidebar %}
             <div class="stt-primary-sidebar" data-stt-element="sidebar">
                 <div class="stt-primary-sidebar___upper-section">
-                    <div class="stt-primary-sidebar-tabs">
-                        <button class="stt-primary-sidebar-tabs__tab">test</button>
-                        <button class="stt-primary-sidebar-tabs__tab stt-primary-sidebar-tabs__tab--active">test2</button>
-                    </div>
-                    <a class="stt-primary-sidebar__back-button"
-                       href="{% url 'common:home_index' %}">← Back to Home</a>
-                    <div class="stt-primary-sidebar-top">
-                        <h2>Manage Infobjects:</h2>
+                    <div class="stt-primary-sidebar-header">
+                        <a class="stt-primary-sidebar__back-button"
+                           href="{% url 'common:home_index' %}">← Back to Home</a>
                         <button data-stt-action="dismiss" class="stt-button">
                             <svg xmlns="http://www.w3.org/2000/svg"
                                  height="40px"
@@ -54,6 +49,13 @@
                                 </path>
                             </svg>
                         </button>
+                    </div>
+                    <div class="stt-primary-sidebar-tabs">
+                        <button class="stt-primary-sidebar-tabs__tab">test</button>
+                        <button class="stt-primary-sidebar-tabs__tab stt-primary-sidebar-tabs__tab--active">test2</button>
+                    </div>
+                    <div class="stt-primary-sidebar-top">
+                        <h2>Manage Infobjects:</h2>
                     </div>
                     <div class="stt-primary-sidebar__list-container">
                         <ul class="clickable-item-list">

@@ -119,19 +119,27 @@ a.stt-primary-sidebar__back-button {
   margin: 0.3rem 0 0 0.6rem;
   color: var(--color-text-secondary);
   text-decoration: none;
-  font-size: small;
   font-weight: bold;
   &:visited {
     color: var(--color-text-secondary);
   }
   &:hover {
     text-decoration: underline;
+    color: var(--color-text-primary);
   }
 }
-
+.stt-primary-sidebar-top {
+  justify-content: start;
+}
 .stt-primary-sidebar___upper-section .stt-primary-sidebar-top h2 {
   margin: 0.2rem 1rem 0.2rem 1rem;
   color: var(--color-text-primary);
+}
+.stt-primary-sidebar-header {
+  display: flex;
+  background-color: var(--color-secondary-darker);
+  justify-content: space-between;
+  align-items: center;
 }
 
 .stt-primary-sidebar-tabs {
